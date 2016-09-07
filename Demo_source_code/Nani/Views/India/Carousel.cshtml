@@ -1,0 +1,118 @@
+﻿@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Nani.Models.CarouselModel>
+
+
+@if (Model == null)
+{
+
+}
+else
+{
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+        <style>
+            .carousel-inner > .item > img,
+            .carousel-inner > .item > a > img {
+                width: 70%;
+                margin: auto;
+            }
+        </style>
+    </head>
+
+
+    <body>
+        @if (Model.CarouselItems != null)
+        {
+            int count = 0;
+            int l = Model.CarouselItems.Count;
+            <div class="container">
+                <br>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+
+
+                    <ol class="carousel-indicators">
+
+                        @foreach (var items in Model.CarouselItems)
+                        {
+                            if (count == 0)
+                            {
+                                <li data-target="#myCarousel" data-slide-to="@count" class="active"></li>
+                            }
+                            else
+                            {
+                                <li data-target="#myCarousel" data-slide-to="@count"></li>
+                            }
+                            count++;
+                        }
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+
+                        @{
+
+                            count = 0;
+                            foreach (var carouselPanels in Model.CarouselItems)
+                            {
+                                if (count == 0)
+                                {
+                                    <div class="item active">
+
+                                        <img src="@carouselPanels.CarouselImage.Src" alt="@carouselPanels.CarouselImage.Title" width="460" height="345">
+                                        <div class="carousel-caption">
+                                            <h3>@carouselPanels.CarouselTitle@l</h3>
+                                            <p>@carouselPanels.Description </p>
+
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="item">
+
+                                        <img src="@carouselPanels.CarouselImage.Src" alt="@carouselPanels.CarouselImage.Title" width="460" height="345">
+                                        <div class="carousel-caption">
+                                            <h3>@carouselPanels.CarouselTitle</h3>
+                                            <p>@carouselPanels.Description</p>
+
+                                        </div>
+                                    </div>
+                                }
+                                count++;
+                            }
+                        }
+
+
+
+
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+            </div>
+                            }
+    </body>
+
+
+</html>
+                            }
+
+
+
+

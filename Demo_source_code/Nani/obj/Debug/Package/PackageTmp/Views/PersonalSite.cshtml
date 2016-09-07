@@ -1,0 +1,91 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Data.Items
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Nani.Models.CookieModel>
+
+<html>
+<head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container" style="padding:150px;">
+
+        <!----modal starts here--->
+        <div id="modal" class="modal fade" role='dialog'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Welcome to Laxmi Narsaiah site</h4>
+                    </div>
+                    <div style="color:black" class="modal-body">
+                        <p>Are you looking for LaxmiNarsaiah.......</p>
+
+                    </div>
+                    @*<div>
+                        <button class="btn btn-default" style="color:black">personal information</button>
+                        <a href="@sitecore.context.item.paths.path">
+                            @html.sitecore().field("personal information")
+                        </a>
+                        <button class="btn btn-default" style="color:black">professional information</button>
+                    </div>*@
+                    <div>
+
+                        @if (Model.CookieList != null)
+                        {
+                            foreach (var cookielist in Model.CookieList)
+                            {
+                          
+                                <button class="btn btn-primary" type="submit" id="readCookie" value="@cookielist.CookieValue"  style="color:black">@cookielist.CookieValue</button>
+                                
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Modal ends here--->
+
+
+    </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#modal").modal({ backdrop: 'static', keyboard: false });
+       
+            $('.btn-primary').click(function () {
+            
+            var url = "";
+            var cookieValue = this.value;
+            var cookieName = '@Model.CookieName';
+            url = '@Url.Action("CookieWithValue", "India")?cookieValue=' + cookieValue + '&cookieName=' + cookieName;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: "",
+                success: function (data) {
+                    window.location = "/";
+                },
+                error: function () {
+
+                }
+
+            });
+
+        });
+    });
+
+    </script>
+    </body>
+</html>

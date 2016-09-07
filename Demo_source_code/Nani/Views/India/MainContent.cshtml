@@ -1,0 +1,139 @@
+﻿@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Nani.Models.MainImageModel>
+@using Sitecore.Mvc
+
+
+
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="~/Content/Main/layout.css" rel="stylesheet" type="text/css" media="all">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    <div class="wrapper row3">
+        <main class="hoc container clear">
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <div class="btmspace-80 center">
+        <h3 class="nospace">@Editable(Model, x => x.Title)</h3>
+        <p class="nospace"></p>
+    </div>
+    <ul class="nospace group services">
+
+        @if (Model.ImageItems != null)
+        {
+
+            int count = 0;
+            foreach (var imageitem in Model.ImageItems)
+            {
+                count++;
+                if (count % 2 == 0)
+                {
+                    <li class="one_third">
+
+
+                        <article class="bgded overlay" style="background-image:url('@imageitem.Image.Src');">
+
+                            <div class="txtwrap">
+                                <i class="block fa fa-4x fa-apple"></i>
+                                <h6 class="heading">@Editable(imageitem, x => x.Title)</h6>
+                                <p>@imageitem.Description&hellip;</p>
+                            </div>
+                            @if (imageitem.Link != null)
+                            {
+                                <footer><a href="@imageitem.Link.Url">@Editable(Model, x => x.LinkTitle) &raquo;</a></footer>
+                            }
+                            else
+                            {
+                                <footer><a href="#">@Editable(Model, x => x.LinkTitle) &raquo;</a></footer>
+                            }
+
+                        </article>
+                    </li>
+                }
+                else
+                {
+                    <li class="one_third active">
+
+
+                        <article class="bgded overlay" style="background-image:url('@RenderImage(imageitem, x => x.Image, true)');">
+                            
+
+                                    <div class="txtwrap">
+                                        <i class="block fa fa-4x fa-child"></i>
+                                        <h6 class="heading">@Editable(imageitem, x => x.Title)</h6>
+                                        <p>@imageitem.Description&hellip;</p>
+                                    </div>
+                                    @if (imageitem.Link != null)
+                                    {
+                                        <footer><a href="@imageitem.Link.Url">@Editable(Model, x => x.LinkTitle) &raquo;</a></footer>
+                                    }
+                                    else
+                                    {
+                                        <footer><a href="#">@Editable(Model, x => x.LinkTitle)&raquo;</a></footer>
+                                    }
+
+</article>
+                    </li>
+                }
+            }
+        }
+
+    </ul>
+
+    <div class="clear"></div>
+    
+</main>
+    </div>
+
+
+    <div class="wrapper row3">
+        <section class="hoc container clear">
+            @foreach(var finalitems in Model.ImageFinalItems)
+            {
+
+            
+            <div class="btmspace-80 center">
+                <h3 class="nospace">@Editable(finalitems, x => x.Title)</h3>
+                <p class="nospace">@Editable(finalitems, x => x.Description)</p>
+            </div>
+            <div class="group">
+                <div class="one_third first">
+                    <h6 class="nospace font-x1">@Editable(finalitems, x => x.SubTitle)</h6>
+                    <p>@Editable(finalitems, x => x.SubDescription)&hellip;</p>
+                    <footer><a class="btn" href="#">@Editable(finalitems, x => x.SubButtonTitle)</a></footer>
+                </div>
+                @foreach(var finalsubitems in finalitems.ImageFinalSubItems)
+                {
+
+               
+                <article class="one_third">
+                    @RenderImage(finalsubitems,x => x.SubImage, true)
+                    <h6 class="nospace font-x1">@Editable(finalsubitems, x => x.Title)</h6>
+                    <p>@Editable(finalsubitems, x => x.Description)&hellip;</p>
+                </article>
+                }
+                
+            </div>
+            }
+        </section>
+
+    </div>
+    
+</body>
+</html>
+<

@@ -1,0 +1,16 @@
+﻿@using Sitecore.Mvc
+
+       <center><h3 class="nospace">@Html.Sitecore().Field("Title")</h3>
+</center>
+       
+
+        @if (Html.Sitecore().Field("Image") == null)
+        {
+
+        }
+        else
+        {
+            <center>@Html.Sitecore().Field("Image")</center>
+        }
+
+<center>@Html.Sitecore().Field("Description")</center>

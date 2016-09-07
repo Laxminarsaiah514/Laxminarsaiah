@@ -1,0 +1,116 @@
+﻿@using Sitecore.Mvc
+@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Nani.Models.Notification>
+
+<br />
+<p>
+
+</p>
+<div>
+    
+        <br />
+        <table width="100%" style="background-color:black;color:white">
+            <tr>
+                <td width="90%">
+                    <span>
+                       @{
+                           string count = HttpContext.Current.Request.Cookies["Notifications"].Values["count"];
+                           if (count != "0")
+                           {
+                                <span id="spanHide">@RenderImage(x => x.Icon, new { W = 30, Width = 30, Height = 30 }, true)<span id="spanCount" style="background-color:black">@HttpContext.Current.Request.Cookies["Notifications"].Values["count"]</span></span>
+                           }
+
+
+                    }
+                            
+                               
+                            
+
+
+
+                        @if (Model.Notificationitems != null)
+                        {
+
+                            int key = 0;
+                            int length = Model.Notificationitems.Count;
+                            foreach (var notificationitem in Model.Notificationitems)
+                            {
+                                key++;
+                                string val = "div" + key;
+                                if (key == 1)
+                                {
+                                    <div align="left" id="@notificationitem.id.ToString()" class="praveen">
+                                        <span style="color:blue">@Editable(notificationitem,x=>x.NotificationText)</span>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div align="left" id="@notificationitem.id.ToString()" style="display:none" class="praveen">
+                                       <span style="color:forestgreen">@Editable(notificationitem, x => x.NotificationText)</span>
+                                    </div>
+
+                                }
+                            }
+
+
+                        }
+                    
+                </td>
+               
+                <td align="right">
+                    <span>
+                        @{
+                            int myVal = 0;
+                            foreach (var notification in Model.Notificationitems)
+                            {
+                                myVal++;
+                                <span align="right">
+                                 
+                                    <div class="buttoncl" id="@notification.id.ToString()" type="button" style="background-color:aqua">@myVal</div>
+                                </span>
+                            }
+                        }
+                    </span>
+                </td>
+            </tr>
+        </table>
+
+
+
+                            
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.buttoncl').click(function () {
+            var guid = this.id;
+            var totalItems = @Model.Notificationitems.Count;
+
+
+            url = '@Url.Action("CountLogic", "India")?guid=' + guid + '&totalCount=' + totalItems;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: "",
+                success: function (data) {
+                    
+
+                        $('#spanCount').html(data);
+
+                },
+                error: function () {
+                }
+
+            });
+
+            $('.praveen').hide();
+            $('#'+ this.id).show();
+        });
+
+    });
+</script>
+

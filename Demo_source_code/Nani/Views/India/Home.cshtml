@@ -1,0 +1,99 @@
+﻿@inherits Glass.Mapper.Sc.Web.Mvc.GlassView<Nani.Models.CookieModel>
+
+
+
+@*h2>Home</h2>
+
+    <div>
+        @if (Model.CookieList != null)
+        {
+            foreach (var cookielist in Model.CookieList)
+            {
+                <span>
+                    <input class="UserType" type="button" value="@cookielist.CookieValue" />
+                </span>
+
+            }
+        }
+
+        </div>*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+
+</head>
+<body>
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content" style="position:center">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Welcome to Demo site</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Please select your country </p>
+                    <form>
+
+
+                        @if (Model.CookieList != null)
+                        {
+                            foreach (var cookielist in Model.CookieList)
+                            {
+                                @*<span>
+                                        <input  class="UserType" type="button" value="@cookielist.CookieValue" />
+
+
+                                    </span>*@
+
+                                <button type="submit" id="readCookie" value="@cookielist.CookieValue" class="btn btn-primary">@cookielist.CookieValue</button>
+
+                            }
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var firstTime = localStorage.getItem("firstTime");
+        if (!firstTime) {
+            $("#myModal").modal({backdrop: 'static', keyboard: false});
+
+        }
+
+        $('.btn-primary').click(function () {
+            localStorage.setItem("firstTime", true);
+            var url = "";
+            var cookieValue = this.value;
+            var cookieName = '@Model.CookieName';
+            url = '@Url.Action("CookieWithValue", "India")?cookieValue=' + cookieValue + '&cookieName=' + cookieName;
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json; charset=utf-8",
+                data: "",
+                success: function (data) {
+                    window.location = "/";
+                },
+                error: function () {
+
+                }
+
+            });
+
+        });
+    });
+
+</script>
